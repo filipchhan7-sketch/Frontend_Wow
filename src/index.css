@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --brand-dark: 37 17 5;
+    --brand-crimson: 93 4 20;
+    --brand-brown-yellow: 212 148 0;
+    --brand-potato: 228 198 166;
+    --brand-charred: 57 35 22;
+    --brand-scarlet: 146 9 32;
+    --brand-yellow: 247 172 0;
+    --brand-tile: 254 249 243;
+  }
+}
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body { @apply bg-brand-cream text-brand-choc font-sans antialiased overflow-x-hidden; }
+  h1, h2, h3, h4 { @apply font-display; }
+  ::selection { @apply bg-brand-yellow text-brand-choc; }
+}
+
+@layer components {
+  .container-x { @apply mx-auto w-full max-w-7xl px-5 sm:px-8; }
+  .section { @apply py-20 sm:py-28; }
+  .chip { @apply inline-flex items-center gap-1 rounded-full bg-brand-yellow/60 px-3 py-1 text-xs font-bold uppercase tracking-wider; }
+  .card { @apply rounded-3xl border border-brand-choc/5 bg-brand-tile p-6 shadow-card; }
+  .input {
+    @apply w-full rounded-2xl border-2 border-brand-choc/10 bg-brand-tile px-4 py-3 text-sm font-medium outline-none transition
+           placeholder:text-brand-choc/35 focus:border-brand-orange focus:ring-4 focus:ring-brand-yellow/40;
+  }
+  .input-error { @apply border-brand-red focus:border-brand-red focus:ring-brand-red/20; }
+}
