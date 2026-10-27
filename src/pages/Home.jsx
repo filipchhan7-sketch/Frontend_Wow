@@ -1,29 +1,21 @@
 import Hero from '../components/sections/Hero';
-import Marquee from '../components/sections/Marquee';
-import WhyWow from '../components/sections/WhyWow';
-import Stats from '../components/sections/Stats';
-import StoryTeaser from '../components/sections/StoryTeaser';
 import MenuTeaser from '../components/sections/MenuTeaser';
-import Steps from '../components/sections/Steps';
-import StoresTeaser from '../components/sections/StoresTeaser';
-import EventsTeaser from '../components/sections/EventsTeaser';
-import NewsTeaser from '../components/sections/NewsTeaser';
-import FinalCTA from '../components/sections/FinalCTA';
+import Button from '../components/Button';
 
 export default function Home() {
   return (
     <>
       <Hero />
-      <Marquee />
-      <WhyWow />
       <MenuTeaser />
-      <Stats />
-      <StoryTeaser />
-      <Steps bg="bg-brand-soft/60" />
-      <StoresTeaser />
-      <EventsTeaser />
-      <NewsTeaser />
-      <FinalCTA />
+      <section className="bg-brand-soft/60 py-8 sm:py-10" aria-label="Store locator">
+        <div className="container-x flex flex-col items-start justify-between gap-5 sm:flex-row sm:items-center">
+          <div>
+            <p className="font-display text-xl font-bold text-brand-choc sm:text-2xl">Craving WOW POTATO?</p>
+            <p className="mt-1 text-sm text-brand-choc/70 sm:text-base">Find a store near you.</p>
+          </div>
+          <Button to="/stores" variant="dark">Find a store →</Button>
+        </div>
+      </section>
     </>
   );
 }

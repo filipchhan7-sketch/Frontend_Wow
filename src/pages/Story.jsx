@@ -11,7 +11,7 @@ const stateLabel = { done: 'Done', now: 'Now', next: 'Next' };
 export default function Story() {
   return (
     <>
-      <PageHeader eyebrow="Our story" title={'WE DON’T JUST SELL POTATOES.\nWE DELIVER SMILES.'} sub="Where WOW POTATO started, why it exists, and where it’s going." emoji="😊" />
+      <PageHeader eyebrow="Our story" title={'WE DON’T JUST SELL POTATOES.\nWE DELIVER SMILES.'} sub="Where WOW POTATO started, why it exists, and where it’s going." />
 
       <section className="section">
         <div className="container-x grid gap-8 lg:grid-cols-2">

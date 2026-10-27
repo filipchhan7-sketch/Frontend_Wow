@@ -12,8 +12,8 @@ export default function Footer() {
   return (
     <footer className="bg-brand-choc pt-16 text-brand-tile">
       <div className="container-x grid gap-12 pb-12 md:grid-cols-2 lg:grid-cols-5">
-        <div className="lg:col-span-2">
-          <Logo light />
+        <div className="lg:col-span-2"> 
+          <Logo imageOnly />
           <p className="mt-4 font-display text-2xl font-semibold text-brand-yellow">The Longest Fries.<br />The Biggest Smiles.</p>
         </div>
         {COLS.map((c) => (

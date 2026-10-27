@@ -1,6 +1,5 @@
-﻿import { motion } from 'framer-motion';
+﻿import { motion, useReducedMotion } from 'framer-motion';
 import Button, { FranchiseCTA } from '../Button';
-import FryBox from '../FryBox';
 
 const line = (words, base) => words.map((w, i) => (
   <span key={w + i} className="mr-3 inline-block overflow-hidden align-bottom">
@@ -10,10 +9,12 @@ const line = (words, base) => words.map((w, i) => (
 
 const BADGES = [
   { e: '😊', cls: 'left-2 top-10 sm:left-0', d: 0 }, { e: '🧀', cls: 'right-2 top-24 sm:right-0', d: 0.6 },
-  { e: '🌶️', cls: 'bottom-24 left-0', d: 1.1 }, { e: '✨', cls: 'bottom-10 right-6', d: 0.3 },
+  { e: '🥔', cls: 'bottom-24 left-0', d: 1.1 }, { e: '✨', cls: 'bottom-10 right-6', d: 0.3 },
 ];
 
 export default function Hero() {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <section className="relative overflow-hidden bg-brand-yellow pb-20 pt-32 sm:pt-40">
       <div className="absolute -right-32 -top-32 h-[32rem] w-[32rem] rounded-full bg-brand-orange/40 blur-3xl" />
@@ -34,12 +35,24 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        <motion.div initial={{ opacity: 0, scale: 0.8, rotate: -6 }} animate={{ opacity: 1, scale: 1, rotate: 0 }} transition={{ type: 'spring', stiffness: 70, delay: 0.3 }} className="relative mx-auto w-full max-w-md">
+        <motion.div
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 12, scale: 0.98, rotate: -2 }}
+          animate={{ opacity: 1, y: 0, scale: 1, rotate: 0 }}
+          transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 90, damping: 18, delay: 0.2 }}
+          className="relative mx-auto w-full max-w-md"
+        >
+
           <div className="absolute inset-6 rounded-full bg-brand-tile/50" />
-          <FryBox className="relative animate-float drop-shadow-2xl" />
+          <motion.img
+            src="/images/Golden.png"
+            alt="Illustration of WOW POTATO's golden longest fries"
+            className="motion-safe:animate-float relative z-10 block h-auto w-full object-contain drop-shadow-2xl"
+            initial={false}
+          />
           {BADGES.map((b) => (
             <motion.span key={b.e} className={`absolute grid h-14 w-14 place-items-center rounded-full bg-brand-tile text-3xl shadow-card ${b.cls}`}
-              animate={{ y: [0, -12, 0], rotate: [0, 8, -8, 0] }} transition={{ duration: 4, repeat: Infinity, delay: b.d }}>
+              animate={shouldReduceMotion ? undefined : { y: [0, -12, 0], rotate: [0, 8, -8, 0] }}
+              transition={shouldReduceMotion ? undefined : { duration: 4, repeat: Infinity, delay: b.d }}>
               {b.e}
             </motion.span>
           ))}

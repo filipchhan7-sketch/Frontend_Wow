@@ -1,4 +1,4 @@
-﻿import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import PageHeader from '../components/PageHeader';
@@ -18,6 +18,33 @@ const INITIAL = {
   currentBusiness: '', fbExperience: '', existingStores: '', yearsInBusiness: '',
   investment: '', territoryCountry: '', territoryCity: '', stores: '', message: '', consent: false,
 };
+const DRAFT_KEY = 'wp_franchise_application_draft';
+
+function loadDraft() {
+  try {
+    const saved = localStorage.getItem(DRAFT_KEY);
+    if (!saved) return { data: INITIAL, step: 0, restored: false, error: '' };
+
+    const parsed = JSON.parse(saved);
+    if (!parsed || typeof parsed.data !== 'object' || parsed.data === null || Array.isArray(parsed.data)) {
+      throw new Error('Invalid application draft');
+    }
+
+    const data = { ...INITIAL };
+    Object.keys(INITIAL).forEach((key) => {
+      if (typeof parsed.data[key] === typeof INITIAL[key]) data[key] = parsed.data[key];
+    });
+    const step = Number.isInteger(parsed.step) ? Math.min(Math.max(parsed.step, 0), STEPS.length - 1) : 0;
+    return { data, step, restored: true, error: '' };
+  } catch {
+    return {
+      data: INITIAL,
+      step: 0,
+      restored: false,
+      error: 'We could not restore your saved application draft. Your new answers will still be saved automatically.',
+    };
+  }
+}
 
 function validate(step, d) {
   const e = {};
@@ -41,13 +68,37 @@ const slide = {
 };
 
 export default function Apply() {
-  const [step, setStep] = useState(0);
+  const [initialDraft] = useState(loadDraft);
+  const [step, setStep] = useState(initialDraft.step);
   const [dir, setDir] = useState(1);
-  const [d, setD] = useState(INITIAL);
+  const [d, setD] = useState(initialDraft.data);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('idle'); // idle | sending | done | error
   const [leadId, setLeadId] = useState('');
+  const [draftError, setDraftError] = useState(initialDraft.error);
   const started = useRef(false);
+  const draftExists = useRef(initialDraft.restored);
+
+  useEffect(() => {
+    const hasProgress = step > 0 || Object.values(d).some((value) => (typeof value === 'boolean' ? value : Boolean(value)));
+    try {
+      if (status === 'done') {
+        localStorage.removeItem(DRAFT_KEY);
+        draftExists.current = false;
+      } else if (hasProgress) {
+        localStorage.setItem(DRAFT_KEY, JSON.stringify({ data: d, step }));
+        draftExists.current = true;
+      } else if (draftExists.current) {
+        localStorage.removeItem(DRAFT_KEY);
+        draftExists.current = false;
+      } else {
+        return;
+      }
+      setDraftError('');
+    } catch {
+      setDraftError('Your application could not be saved in this browser. Please keep this page open until you submit.');
+    }
+  }, [d, step, status]);
 
   const set = (k) => (v) => {
     if (!started.current) { started.current = true; track('application_started'); }
@@ -84,6 +135,7 @@ export default function Apply() {
             <h2 className="mt-6 text-3xl font-bold">Thank you, {d.fullName.split(' ')[0]}!</h2>
             <p className="mt-3 text-brand-choc/75">Our franchise development team will review your information and contact qualified applicants.</p>
             <p className="mt-5 rounded-2xl bg-brand-soft p-4 text-sm">Your reference: <b className="font-mono">{leadId}</b></p>
+            {draftError && <p role="alert" className="mt-4 text-sm font-semibold text-brand-red">{draftError}</p>}
             <div className="mt-8 flex flex-wrap justify-center gap-3"><Button to="/" variant="dark">Back to home</Button><Button to="/menu" variant="outline">Explore the menu</Button></div>
           </motion.div>
         </section>
@@ -96,6 +148,8 @@ export default function Apply() {
       <PageHeader eyebrow="Franchise application" title={'START YOUR\nFRANCHISE JOURNEY'} sub="Five quick steps. No exact wealth figures required." emoji="📝" />
       <section className="section">
         <div className="container-x max-w-3xl">
+          {draftError && <p role="alert" className="mb-4 rounded-2xl bg-brand-red/10 p-3 text-sm font-semibold text-brand-red">{draftError}</p>}
+          {!draftError && initialDraft.restored && <p role="status" className="mb-4 rounded-2xl bg-brand-soft p-3 text-sm">Your saved application draft was restored.</p>}
           <div className="mb-8">
             <div className="flex items-center justify-between text-xs font-bold">
               <span>Step {step + 1} of {STEPS.length}</span><span>{STEPS[step].emoji} {STEPS[step].name}</span>

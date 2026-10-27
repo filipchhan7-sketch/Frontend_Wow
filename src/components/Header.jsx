@@ -5,20 +5,23 @@ import { NAV } from '../data/content';
 import Button from './Button';
 
 const LOGO_IMAGE = '/images/wow-logo.png';
+const MASCOT_LOGO_IMAGE = '/images/Logo WOW.png';
 
-export function Logo({ light = false }) {
+export function Logo({ light = false, imageOnly = false }) {
   return (
     <Link to="/" className="group flex items-center gap-2" aria-label="WOW POTATO home">
       <motion.img
-        src={LOGO_IMAGE}
+        src={imageOnly ? MASCOT_LOGO_IMAGE : LOGO_IMAGE}
         alt="WOW POTATO"
         whileHover={{ rotate: [0, -15, 15, -8, 0] }}
         transition={{ duration: 0.6 }}
-        className="h-9 w-9 object-contain"
+        className={imageOnly ? 'h-[60px] w-auto max-w-[200px] object-contain' : 'h-9 w-9 object-contain'}
       />
-      <span className={`font-display text-2xl font-bold tracking-tight ${light ? 'text-brand-tile' : 'text-brand-choc'}`}>
-        WOW <span className="text-brand-red">POTATO</span>
-      </span>
+      {!imageOnly && (
+        <span className={`font-display text-2xl font-bold tracking-tight ${light ? 'text-brand-tile' : 'text-brand-choc'}`}>
+          WOW <span className="text-brand-red">POTATO</span>
+        </span>
+      )}
     </Link>
   );
 }
@@ -37,9 +40,9 @@ export default function Header() {
   useEffect(() => setOpen(false), [pathname]);
 
   return (
-    <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled || open ? 'bg-brand-cream/90 shadow-card backdrop-blur-md' : 'bg-transparent'}`}>
+    <header className={`fixed inset-x-0 top-0 z-50 border-b border-[#9A041F] transition-all duration-300 ${scrolled || open ? 'bg-brand-cream/90 shadow-card backdrop-blur-md' : 'bg-transparent'}`}>
       <div className="container-x flex h-[72px] items-center justify-between gap-4">
-        <Logo />
+        <Logo imageOnly />
 
         <nav className="hidden items-center gap-7 xl:flex" aria-label="Main">
           {NAV.map((n) => (
