@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import EmojiIcon from './EmojiIcon';
 
 export default function ProductCard({ item, onSelect }) {
   return (
@@ -15,7 +16,7 @@ export default function ProductCard({ item, onSelect }) {
           <img src={item.image} alt={item.name} className="h-full w-full object-cover" />
         ) : (
           <motion.span className="text-8xl drop-shadow-lg" whileHover={{ rotate: 12, scale: 1.15 }} transition={{ type: 'spring' }}>
-            {item.emoji}
+            <EmojiIcon emoji={item.emoji} className="h-24 w-40" />
           </motion.span>
         )}
         {item.tag && <span className="absolute left-4 top-4 rounded-full bg-brand-choc px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-brand-tile">{item.tag}</span>}

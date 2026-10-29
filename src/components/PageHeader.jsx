@@ -1,8 +1,10 @@
-﻿import { motion } from 'framer-motion';
+import { motion } from 'framer-motion';
+
+import EmojiIcon from './EmojiIcon';
 
 export default function PageHeader({ eyebrow, title, sub, emoji = '🥔', children }) {
   return (
-    <section className="relative overflow-hidden bg-brand-yellow pb-16 pt-32 sm:pb-24 sm:pt-40">
+    <section className="relative overflow-hidden bg-brand-yellow pb-16 pt-36 sm:pb-24 sm:pt-44">
       <div className="absolute -right-24 -top-24 h-96 w-96 rounded-full bg-brand-orange/30 blur-3xl" />
       <div className="absolute -bottom-32 -left-20 h-96 w-96 rounded-full bg-brand-tile/40 blur-3xl" />
       <motion.span
@@ -12,7 +14,7 @@ export default function PageHeader({ eyebrow, title, sub, emoji = '🥔', childr
         animate={{ opacity: 0.9, rotate: 12, scale: 1 }}
         transition={{ type: 'spring', stiffness: 80, delay: 0.2 }}
       >
-        {emoji}
+        <EmojiIcon emoji={emoji} className="h-16 w-28 sm:h-20 sm:w-32" />
       </motion.span>
       <div className="container-x relative">
         {eyebrow && <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="chip bg-brand-tile/70">{eyebrow}</motion.span>}

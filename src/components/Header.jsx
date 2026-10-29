@@ -3,9 +3,10 @@ import { Link, NavLink, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { NAV } from '../data/content';
 import Button from './Button';
+import EmojiIcon from './EmojiIcon';
 
 const LOGO_IMAGE = '/images/wow-logo.png';
-const MASCOT_LOGO_IMAGE = '/images/Logo WOW.png';
+const MASCOT_LOGO_IMAGE = '/images/wow-logo.png';
 
 export function Logo({ light = false, imageOnly = false }) {
   return (
@@ -15,7 +16,7 @@ export function Logo({ light = false, imageOnly = false }) {
         alt="WOW POTATO"
         whileHover={{ rotate: [0, -15, 15, -8, 0] }}
         transition={{ duration: 0.6 }}
-        className={imageOnly ? 'h-[60px] w-auto max-w-[200px] object-contain' : 'h-9 w-9 object-contain'}
+        className={imageOnly ? 'h-[80px] w-auto max-w-[240px] object-contain' : 'h-11 w-11 object-contain'}
       />
       {!imageOnly && (
         <span className={`font-display text-2xl font-bold tracking-tight ${light ? 'text-brand-tile' : 'text-brand-choc'}`}>
@@ -40,16 +41,19 @@ export default function Header() {
   useEffect(() => setOpen(false), [pathname]);
 
   return (
-    <header className={`fixed inset-x-0 top-0 z-50 border-b border-[#9A041F] transition-all duration-300 ${scrolled || open ? 'bg-brand-cream/90 shadow-card backdrop-blur-md' : 'bg-transparent'}`}>
-      <div className="container-x flex h-[72px] items-center justify-between gap-4">
+    <header className={`fixed inset-x-0 top-0 z-50 border-b border-[#9A041F] transition-all duration-300 ${pathname === '/story' ? 'bg-brand-yellow' : scrolled || open ? 'bg-brand-cream/90 shadow-card backdrop-blur-md' : 'bg-transparent'}`}>
+      <div className="container-x flex h-[96px] items-center justify-between gap-4">
         <Logo imageOnly />
 
         <nav className="hidden items-center gap-7 xl:flex" aria-label="Main">
           {NAV.map((n) => (
             <NavLink key={n.to} to={n.to} className="text-sm font-semibold transition-colors hover:text-brand-red">
               {({ isActive }) => (
-                <span className="relative py-1">
-                  {n.label}
+                  <span className="relative py-1">
+                    <span className={n.to === '/franchise' ? 'relative inline-flex' : ''}>
+                      {n.to === '/franchise' && <span role="img" aria-label="Crown" className="absolute -top-3 left-1/2 -translate-x-1/2 text-[10px] leading-none">👑</span>}
+                      {n.label}
+                    </span>
                   {isActive && <motion.span layoutId="nav-underline" className="absolute -bottom-0.5 left-0 right-0 h-1 rounded-full bg-brand-red" />}
                 </span>
               )}
@@ -58,9 +62,9 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <Button to="/franchise/apply" trackEvent location="header" size="sm">
-            <span className="hidden sm:inline">🥔 Become a Franchise Partner</span>
-            <span className="sm:hidden">🥔 Franchise</span>
+          <Button to="/franchise/apply" trackEvent location="header" size="sm" className="whitespace-nowrap">
+            <span className="hidden sm:inline"><EmojiIcon emoji="🥔" className="h-4 w-7" /> Become a Franchise Partner</span>
+            <span className="sm:hidden"><EmojiIcon emoji="🥔" className="h-4 w-7" /> Franchise</span>
           </Button>
           <button
             onClick={() => setOpen((o) => !o)} aria-label="Toggle menu" aria-expanded={open}
@@ -85,7 +89,10 @@ export default function Header() {
               {NAV.map((n, i) => (
                 <motion.div key={n.to} initial={{ x: -20, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: i * 0.04 }}>
                   <NavLink to={n.to} className={({ isActive }) => `block rounded-2xl px-4 py-3 font-display text-2xl font-semibold ${isActive ? 'bg-brand-yellow' : 'hover:bg-brand-yellow/40'}`}>
-                    {n.label}
+                    <span className={n.to === '/franchise' ? 'relative inline-flex' : ''}>
+                      {n.to === '/franchise' && <span role="img" aria-label="Crown" className="absolute -top-3 left-1/2 -translate-x-1/2 text-xs leading-none">👑</span>}
+                      {n.label}
+                    </span>
                   </NavLink>
                 </motion.div>
               ))}

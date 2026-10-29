@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { track } from '../lib/analytics';
+import EmojiIcon from './EmojiIcon';
 
 const variants = {
   primary: 'bg-brand-red text-brand-tile shadow-pop hover:bg-brand-crimson',
@@ -39,7 +40,7 @@ export default function Button({
 export function FranchiseCTA({ location, size = 'lg', variant = 'primary', children = 'Become a Franchise Partner' }) {
   return (
     <Button to="/franchise/apply" trackEvent location={location} size={size} variant={variant}>
-      🥔 {children}
+      <EmojiIcon emoji="🥔" className="h-4 w-7" /> {children}
     </Button>
   );
 }

@@ -3,9 +3,6 @@ import PageHeader from '../components/PageHeader';
 import SectionTitle from '../components/SectionTitle';
 import Reveal from '../components/Reveal';
 import Button from '../components/Button';
-import { REGIONS } from '../data/content';
-
-const statusStyle = { Active: 'bg-brand-yellow text-brand-choc', 'Coming Soon': 'bg-brand-yellow', Planned: 'bg-brand-soft', Vision: 'bg-brand-tile border border-brand-choc/20' };
 
 export default function International() {
   return (
@@ -33,20 +30,6 @@ export default function International() {
             <SectionTitle center={false} eyebrow="Available territories" title="INTERESTED IN YOUR COUNTRY?" sub="We’re opening select markets to the right partners. Tell us about yours and let’s start a territory discussion." />
             <div className="mt-8"><Button to="/franchise/apply" trackEvent location="international" size="lg">Request a territory discussion</Button></div>
           </div>
-        </div>
-      </section>
-      <section className="section bg-brand-soft/60">
-        <div className="container-x grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {REGIONS.map((r, i) => (
-            <Reveal key={r.name} delay={i * 0.08} className="h-full">
-              <motion.div whileHover={{ y: -8 }} className="card h-full">
-                <div className="text-5xl">{r.flag}</div>
-                <h3 className="mt-3 text-xl font-bold">{r.name}</h3>
-                <span className={`mt-2 inline-block rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-wider ${statusStyle[r.status]}`}>{r.status}</span>
-                <p className="mt-3 text-sm text-brand-choc/70">{r.text}</p>
-              </motion.div>
-            </Reveal>
-          ))}
         </div>
       </section>
     </>

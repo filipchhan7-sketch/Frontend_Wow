@@ -1,5 +1,6 @@
-﻿import { motion, useReducedMotion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import Button, { FranchiseCTA } from '../Button';
+import EmojiIcon from '../EmojiIcon';
 
 const line = (words, base) => words.map((w, i) => (
   <span key={w + i} className="mr-3 inline-block overflow-hidden align-bottom">
@@ -16,7 +17,7 @@ export default function Hero() {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <section className="relative overflow-hidden bg-brand-yellow pb-20 pt-32 sm:pt-40">
+    <section className="relative overflow-hidden bg-brand-yellow pb-20 pt-36 sm:pt-44">
       <div className="absolute -right-32 -top-32 h-[32rem] w-[32rem] rounded-full bg-brand-orange/40 blur-3xl" />
       <div className="absolute -bottom-40 -left-24 h-[28rem] w-[28rem] rounded-full bg-brand-tile/50 blur-3xl" />
       <div className="container-x relative grid items-center gap-10 lg:grid-cols-2">
@@ -27,7 +28,7 @@ export default function Hero() {
             <span className="block text-brand-red">{line(['THE', 'BIGGEST', 'SMILES.'], 0.45)}</span>
           </h1>
           <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9 }} className="mt-6 max-w-lg text-lg font-medium text-brand-choc/80">
-            A fun, flavorful potato brand built for the next generation of snack lovers.
+            Cambodia's most fun fries — long, golden and made to be shared.
           </motion.p>
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.05 }} className="mt-8 flex flex-wrap items-center gap-4">
             <FranchiseCTA location="hero" />
@@ -53,7 +54,7 @@ export default function Hero() {
             <motion.span key={b.e} className={`absolute grid h-14 w-14 place-items-center rounded-full bg-brand-tile text-3xl shadow-card ${b.cls}`}
               animate={shouldReduceMotion ? undefined : { y: [0, -12, 0], rotate: [0, 8, -8, 0] }}
               transition={shouldReduceMotion ? undefined : { duration: 4, repeat: Infinity, delay: b.d }}>
-              {b.e}
+              <EmojiIcon emoji={b.e} className="h-9 w-14" />
             </motion.span>
           ))}
         </motion.div>

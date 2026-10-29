@@ -2,6 +2,7 @@
 import Reveal from '../components/Reveal';
 import { FranchiseCTA } from '../components/Button';
 import { SITE } from '../data/content';
+import EmojiIcon from '../components/EmojiIcon';
 
 export default function Contact() {
   const rows = [['📞', 'Phone', SITE.phone, `tel:${SITE.phone.replace(/\s/g, '')}`], ['✉️', 'Email', SITE.email, `mailto:${SITE.email}`], ['📍', 'Address', SITE.address, null]];
@@ -24,7 +25,7 @@ export default function Contact() {
           </Reveal>
           <Reveal delay={0.1}>
             <div className="card h-full bg-brand-red text-brand-tile">
-              <span className="text-5xl">🥔</span>
+              <span className="inline-flex h-14 w-20"><EmojiIcon emoji="🥔" className="h-full w-full" /></span>
               <h2 className="mt-4 text-3xl font-bold">Franchise inquiry</h2>
               <p className="mt-3 text-brand-tile/85">Interested in building WOW POTATO in your city or country? Franchise inquiries have their own fast lane.</p>
               <div className="mt-8"><FranchiseCTA location="contact" variant="yellow">Become a Franchise Partner →</FranchiseCTA></div>

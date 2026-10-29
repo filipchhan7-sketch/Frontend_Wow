@@ -11,10 +11,10 @@ export const SITE = {
 
 export const NAV = [
   { to: '/story', label: 'Our Story' },
+  { to: '/franchise', label: 'Franchise' },
   { to: '/why-wow', label: 'Why WOW' },
   { to: '/menu', label: 'Menu' },
   { to: '/stores', label: 'Stores' },
-  { to: '/franchise', label: 'Franchise' },
   { to: '/events', label: 'Events' },
   { to: '/news', label: 'News' },
 ];

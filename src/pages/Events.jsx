@@ -40,7 +40,7 @@ export default function Events() {
         <div className="container-x">
           <SectionTitle eyebrow="We do events" title="WHAT CAN WE CATER?" />
           <div className="mt-12 grid grid-cols-2 gap-5 md:grid-cols-3">
-            {EVENT_TYPES.map((e, i) => (
+            {EVENT_TYPES.slice(0, 4).map((e, i) => (
               <Reveal key={e.title} delay={i * 0.06}>
                 <motion.div whileHover={{ y: -8, rotate: -2 }} className="card text-center"><div className="text-5xl">{e.emoji}</div><h3 className="mt-3 text-lg font-bold">{e.title}</h3></motion.div>
               </Reveal>
