@@ -10,13 +10,27 @@ import { submitEventBooking } from '../lib/api';
 import { track } from '../lib/analytics';
 
 const INITIAL = { name: '', email: '', phone: '', eventType: '', date: '', guests: '', message: '' };
+const DRAFT_KEY = 'wp_event_booking_draft';
+
+function readDraft() {
+  try { return { ...INITIAL, ...JSON.parse(localStorage.getItem(DRAFT_KEY) || '{}') }; }
+  catch { return INITIAL; }
+}
 
 export default function Events() {
-  const [d, setD] = useState(INITIAL);
+  const [d, setD] = useState(readDraft);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('idle');
   const [ref, setRef] = useState('');
-  const set = (k) => (e) => { setD((p) => ({ ...p, [k]: e.target.value })); setErrors((p) => ({ ...p, [k]: undefined })); };
+  const set = (k) => (e) => {
+    const value = e.target.value;
+    setD((p) => {
+      const next = { ...p, [k]: value };
+      try { localStorage.setItem(DRAFT_KEY, JSON.stringify(next)); } catch {}
+      return next;
+    });
+    setErrors((p) => ({ ...p, [k]: undefined }));
+  };
 
   const submit = async (e) => {
     e.preventDefault();
@@ -28,7 +42,13 @@ export default function Events() {
     setErrors(er);
     if (Object.keys(er).length) return;
     setStatus('sending');
-    try { const r = await submitEventBooking(d); setRef(r.id); track('event_booking_submitted', { eventType: d.eventType }); setStatus('done'); }
+    try {
+      const r = await submitEventBooking(d);
+      setRef(r.id);
+      try { localStorage.removeItem(DRAFT_KEY); } catch {}
+      track('event_booking_submitted', { eventType: d.eventType });
+      setStatus('done');
+    }
     catch { setStatus('error'); }
   };
   const cls = (k) => `input ${errors[k] ? 'input-error' : ''}`;

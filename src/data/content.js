@@ -6,7 +6,7 @@ export const SITE = {
   phone: '+855 12 333 444', // TODO: real phone
   email: 'hello@wowpotato.com', // TODO: real email
   address: 'Phnom Penh, Cambodia',
-  social: { facebook: '#', instagram: '#', tiktok: '#', youtube: '#' }, // TODO: real links
+  social: { facebook: 'https://www.facebook.com/share/1F2xKhRiRY/?mibextid=wwXIfr', instagram: 'https://www.instagram.com/wowpotatocambodia?xtok=czQxMXFmOTExdHVs', tiktok: 'https://www.tiktok.com/@wowpotatocambodia?is_from_webapp=1&sender_device=pc', youtube: '#' }, // TODO: real links
 };
 
 export const NAV = [
@@ -19,7 +19,7 @@ export const NAV = [
   { to: '/news', label: 'News' },
 ];
 
-export const MARQUEE = ['Longest Fries', 'Biggest Smiles', 'Made Fresh', 'Fun for Everyone', 'Franchise Opportunities', 'From Cambodia to the World'];
+export const MARQUEE = ['From Cambodia to the World', 'Longest Fries', 'Biggest Smiles', 'Made Fresh', 'Fun for Everyone', 'Franchise Opportunities'];
 
 export const WHY_WOW = [
   { emoji: '🥔', title: 'Unique Product', text: 'Extra-long fries create strong visual differentiation and a memorable first bite.' },
@@ -108,8 +108,6 @@ export const EVENT_TYPES = [
   { emoji: '🏫', title: 'School Events' },
   { emoji: '🏢', title: 'Corporate Events' },
   { emoji: '🎪', title: 'Festivals' },
-  { emoji: '🏬', title: 'Mall Events' },
-  { emoji: '🎉', title: 'Brand Activations' },
 ];
 
 export const INVESTMENT_RANGES = ['Below $100K', '$100K–$250K', '$250K–$500K', '$500K–$1M', '$1M+'];

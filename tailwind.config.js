@@ -28,13 +28,13 @@ export default {
       },
       keyframes: {
         float: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-14px)' } },
-        marquee: { from: { transform: 'translateX(0)' }, to: { transform: 'translateX(-50%)' } },
+        marquee: { from: { transform: 'translate3d(0, 0, 0)' }, to: { transform: 'translate3d(-50%, 0, 0)' } },
         spinSlow: { to: { transform: 'rotate(360deg)' } },
         pulseRing: { '0%': { transform: 'scale(1)', opacity: '.6' }, '100%': { transform: 'scale(1.7)', opacity: '0' } },
       },
       animation: {
         float: 'float 4s ease-in-out infinite',
-        marquee: 'marquee 25s linear infinite',
+        marquee: 'marquee 40s linear infinite',
         'spin-slow': 'spinSlow 40s linear infinite',
         'spin-slower': 'spinSlow 70s linear infinite reverse',
         'pulse-ring': 'pulseRing 2s ease-out infinite',

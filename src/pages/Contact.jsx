@@ -20,7 +20,7 @@ export default function Contact() {
                     <div><p className="text-xs font-bold uppercase text-brand-choc/50">{l}</p>{h ? <a href={h} className="font-semibold hover:text-brand-red">{v}</a> : <p className="font-semibold">{v}</p>}</div></div>
                 ))}
               </div>
-              <div className="mt-8 flex flex-wrap gap-2">{Object.entries(SITE.social).map(([k, v]) => <a key={k} href={v} className="rounded-full bg-brand-choc px-4 py-2 text-sm font-bold capitalize text-brand-tile transition hover:bg-brand-red">{k}</a>)}</div>
+              <div className="mt-8 flex flex-wrap gap-2">{Object.entries(SITE.social).filter(([, url]) => url && url !== '#').map(([k, v]) => <a key={k} href={v} target="_blank" rel="noreferrer" className="rounded-full bg-brand-choc px-4 py-2 text-sm font-bold capitalize text-brand-tile transition hover:bg-brand-red">{k}</a>)}</div>
             </div>
           </Reveal>
           <Reveal delay={0.1}>

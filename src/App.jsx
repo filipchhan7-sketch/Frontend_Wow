@@ -17,6 +17,7 @@ import NewsDetail from './pages/NewsDetail';
 import Contact from './pages/Contact';
 import Legal from './pages/Legal';
 import NotFound from './pages/NotFound';
+import Login from './pages/Login';
 
 const Page = ({ children }) => (
   <motion.main initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.3 }}>
@@ -48,6 +49,7 @@ export default function App() {
           <Route path="/privacy" element={<Page><Legal title="Privacy Policy" /></Page>} />
           <Route path="/terms" element={<Page><Legal title="Terms & Conditions" /></Page>} />
           <Route path="*" element={<Page><NotFound /></Page>} />
+          <Route path="/login" element={<Page><Login /></Page>} />
         </Routes>
       </AnimatePresence>
       <Footer />

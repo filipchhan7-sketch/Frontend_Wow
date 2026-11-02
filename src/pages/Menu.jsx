@@ -1,151 +1,101 @@
-import { useState } from 'react';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { MenuImage } from '../components/MenuTitle';
+﻿import { motion, useReducedMotion } from 'framer-motion';
+import { MENU } from '../data/menu';
 import FinalCTA from '../components/sections/FinalCTA';
-import { MENU, MENU_HERO } from '../data/menu';
 
-function getCategory(item) {
-  if (item.category) return item.category;
-  return item.id.includes('chicken') || item.id.includes('nugget') ? 'Chicken & Sides' : 'Signature Fries';
+const PHOTOS = {
+  'golden-longest-fries': '/images/Golden.png',
+  'signature-mix': '/images/Signature mix (2).png',
+  'spicy-long-potato': '/images/spicy_.png',
+  'chicken-pop': '/images/Chicken pop.png',
+  'fried-nugget': '/images/Fried nugget.png',
+  'chicken-ring': '/images/Chicken ring_.png',
+  'chicken-wing': '/images/Chicken Wing_.png',
+};
+
+function DishRow({ item, index, reduceMotion }) {
+  return (
+    <motion.article
+      initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={reduceMotion ? { duration: 0 } : { duration: 0.5, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
+      className="group relative grid grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] items-center gap-3 border-b border-brand-choc/15 py-5 last:border-b-0 sm:gap-6 sm:py-7"
+    >
+      <div className="relative flex min-h-44 items-center justify-center overflow-hidden rounded-[1.5rem] bg-brand-soft/55 sm:min-h-64">
+        <span aria-hidden="true" className="absolute h-[82%] w-[82%] rounded-full bg-brand-cream/80" />
+        <motion.img
+          src={PHOTOS[item.id] || item.image}
+          alt={item.name}
+          loading="lazy"
+          whileHover={reduceMotion ? undefined : { scale: 1.045, rotate: -1.5 }}
+          transition={{ type: 'spring', stiffness: 150, damping: 20 }}
+          className="relative h-44 w-full scale-110 object-contain p-0 drop-shadow-[0_14px_12px_rgba(37,17,5,.16)] sm:h-64 sm:scale-110"
+        />
+      </div>
+      <div className="py-2 sm:py-4">
+        <h3 className="font-display text-xl font-extrabold leading-[.98] tracking-tight text-brand-choc sm:text-3xl">{item.name}</h3>
+        <p className="mt-2 text-xs leading-relaxed text-brand-choc/70 sm:mt-3 sm:text-sm">
+          Crispy, golden, and full of flavor. The perfect little treat for your next potato break.
+        </p>
+        <p className="mt-3 font-display text-base font-bold text-brand-red sm:text-xl">{item.price || 'Ask in store'}</p>
+      </div>
+    </motion.article>
+  );
+}
+
+function MenuCollection({ title, items, reduceMotion, startIndex }) {
+  if (!items.length) return null;
+  return (
+    <section className="mt-14 sm:mt-20" aria-labelledby={`menu-${title.toLowerCase().replace(/[^a-z]+/g, '-')}`}>
+      <div className="mb-3 flex items-center gap-4 sm:mb-5">
+        <h2 id={`menu-${title.toLowerCase().replace(/[^a-z]+/g, '-')}`} className="font-display text-3xl font-extrabold text-brand-choc sm:text-4xl">{title}</h2>
+        <span className="h-px flex-1 bg-brand-red/30" />
+        <span className="font-display text-sm font-bold uppercase tracking-wider text-brand-red">{String(items.length).padStart(2, '0')} picks</span>
+      </div>
+      <div className="grid gap-x-10 md:grid-cols-2">
+        {items.map((item, index) => <DishRow key={item.id} item={item} index={startIndex + index} reduceMotion={reduceMotion} />)}
+      </div>
+    </section>
+  );
 }
 
 export default function Menu() {
-  const [expanded, setExpanded] = useState(false);
   const reduceMotion = useReducedMotion();
-  const items = MENU.map((item, index) => ({ ...item, category: getCategory(item), menuIndex: index }));
-  const visibleItems = expanded ? items : items.slice(0, 4);
-  const groups = [...new Set(items.map((item) => item.category))]
-    .map((category) => ({
-      category,
-      items: visibleItems.filter((item) => item.category === category),
-    }))
-    .filter((group) => group.items.length > 0);
+  const featured = MENU.find((item) => item.id === 'golden-longest-fries');
+  const rest = MENU.filter((item) => item !== featured);
+  const fries = rest.filter((item) => item.id.includes('signature') || item.id.includes('spicy-long'));
+  const snacks = rest.filter((item) => !fries.includes(item));
 
   return (
     <>
-      <section className="relative overflow-hidden bg-brand-yellow pt-28">
-        <div className="absolute -left-20 top-20 h-80 w-80 rounded-full bg-brand-tile/50 blur-3xl" />
-        <div className="container-x relative grid items-center gap-6 pb-16 md:grid-cols-2">
-          <div>
-            <motion.span initial={reduceMotion ? false : { opacity: 0 }} animate={{ opacity: 1 }} className="chip bg-brand-tile/70">Our menu</motion.span>
-            <motion.h1
-              initial={reduceMotion ? false : { opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-4 whitespace-pre-line text-5xl font-bold uppercase leading-[0.95] text-brand-choc sm:text-7xl"
-            >
-              {MENU_HERO.name}
-            </motion.h1>
-            {MENU_HERO.badge && (
-              <p className="mt-5 flex items-center gap-2 text-xl font-semibold text-brand-choc">
-                <motion.span
-                  animate={reduceMotion ? undefined : { rotate: [0, 25, 0], scale: [1, 1.4, 1] }}
-                  transition={{ repeat: Infinity, duration: 2 }}
-                  className="text-brand-red"
-                >✦</motion.span>
-                {MENU_HERO.badge}
-              </p>
-            )}
-          </div>
-          <motion.div
-            initial={reduceMotion ? false : { opacity: 0, x: 100, rotate: 10 }}
-            animate={{ opacity: 1, x: 0, rotate: 0 }}
-            transition={{ type: 'spring', stiffness: 60, damping: 14, delay: 0.2 }}
-            className="flex justify-center"
-          >
-            <MenuImage src={MENU_HERO.image} emoji={MENU_HERO.emoji} alt={MENU_HERO.name} className="w-full max-w-lg animate-float drop-shadow-2xl" />
-          </motion.div>
-        </div>
-      </section>
-
-      <section className="section">
-        <div className="container-x">
-          <div id="menu-list" className="mx-auto mt-2 max-w-3xl border-y-2 border-brand-choc/80">
-            {groups.length > 0 ? (
-              <AnimatePresence initial={false}>
-                {groups.map(({ category, items: categoryItems }) => (
-                  <motion.section
-                    key={category}
-                    layout={!reduceMotion}
-                    initial={reduceMotion ? false : { opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={reduceMotion ? undefined : { opacity: 0, y: -8 }}
-                    transition={reduceMotion ? { duration: 0 } : { duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                    aria-labelledby={`menu-category-${category.replace(/[^a-z0-9]+/gi, '-').toLowerCase()}`}
-                  >
-                    <div className="flex items-center gap-4 border-b border-brand-choc/20 py-5 sm:py-6">
-                      <h2
-                        id={`menu-category-${category.replace(/[^a-z0-9]+/gi, '-').toLowerCase()}`}
-                        className="shrink-0 font-display text-xl font-bold uppercase tracking-wide text-brand-choc sm:text-2xl"
-                      >
-                        {category}
-                      </h2>
-                      <span aria-hidden="true" className="h-px flex-1 bg-brand-red/50" />
-                    </div>
-                    <motion.ul
-                      layout={!reduceMotion}
-                      className="divide-y divide-brand-choc/20"
-                      aria-label={`${category} menu items`}
-                    >
-                      <AnimatePresence initial={false}>
-                        {categoryItems.map((item) => (
-                          <motion.li
-                            key={item.id}
-                            layout={!reduceMotion}
-                            initial={reduceMotion ? false : { opacity: 0, y: 18 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={reduceMotion ? undefined : { opacity: 0, y: -10 }}
-                            transition={reduceMotion ? { duration: 0 } : {
-                              duration: 0.35,
-                              delay: item.menuIndex < 4 ? item.menuIndex * 0.045 : (item.menuIndex - 4) * 0.045,
-                              ease: [0.22, 1, 0.36, 1],
-                            }}
-                            className="group flex items-baseline justify-between gap-4 py-5 sm:py-6"
-                          >
-                            <span className="flex min-w-0 items-baseline gap-4 sm:gap-6">
-                              <span aria-hidden="true" className="w-7 shrink-0 font-display text-xs font-bold tabular-nums text-brand-red/80 sm:w-9">
-                                {String(item.menuIndex + 1).padStart(2, '0')}
-                              </span>
-                              <span className="text-xl font-bold uppercase leading-tight text-brand-choc transition-transform duration-300 group-hover:translate-x-1 group-hover:text-brand-red sm:text-2xl">
-                                {item.name}
-                              </span>
-                            </span>
-                            {item.price && <span className="shrink-0 text-sm font-bold tracking-wide text-brand-choc sm:text-base">{item.price}</span>}
-                          </motion.li>
-                        ))}
-                      </AnimatePresence>
-                    </motion.ul>
-                  </motion.section>
-                ))}
-              </AnimatePresence>
-            ) : (
-              <p className="py-8 text-center text-brand-choc/70">No menu items are available right now.</p>
-            )}
-          </div>
-
-          {items.length > 4 && (
-            <div className="mt-8 flex justify-center">
-              <button
-                type="button"
-                onClick={() => setExpanded((value) => !value)}
-                aria-expanded={expanded}
-                aria-controls="menu-list"
-                className="group inline-flex items-center gap-3 border-b-2 border-brand-choc px-1 py-3 text-sm font-bold uppercase tracking-[0.14em] text-brand-choc transition-colors hover:border-brand-red hover:text-brand-red focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-red"
-              >
-                {expanded ? 'Show less' : 'See more'}
-                <motion.span
-                  aria-hidden="true"
-                  animate={reduceMotion ? undefined : { y: expanded ? -2 : 2 }}
-                  transition={reduceMotion ? { duration: 0 } : { repeat: Infinity, repeatType: 'reverse', duration: 0.65, ease: 'easeInOut' }}
-                >↓</motion.span>
-              </button>
+      <div className="bg-brand-cream">
+        <section className="relative overflow-hidden bg-brand-yellow pt-28 sm:pt-32">
+          <div aria-hidden="true" className="absolute -left-24 -top-16 h-80 w-80 rounded-full bg-brand-tile/40 blur-3xl" />
+          <div className="container-x relative grid items-center gap-5 pb-10 sm:grid-cols-2 sm:gap-10 sm:pb-14">
+            {featured && <motion.div initial={reduceMotion ? false : { opacity: 0, x: -24, rotate: -2 }} animate={{ opacity: 1, x: 0, rotate: 0 }} transition={{ duration: .65 }} className="relative mx-auto flex w-full max-w-xl items-center justify-center">
+              <span aria-hidden="true" className="absolute h-[82%] w-[82%] rounded-full bg-brand-tile/70" />
+              <motion.img src={PHOTOS[featured.id]} alt={featured.name} className="relative h-80 w-full scale-110 object-contain drop-shadow-[0_20px_18px_rgba(37,17,5,.2)] sm:h-[540px] sm:scale-110" whileHover={reduceMotion ? undefined : { scale: 1.15, rotate: -1 }} transition={{ type: 'spring', stiffness: 140, damping: 18 }} />
+              <span className="absolute right-2 top-3 grid h-20 w-20 place-items-center rounded-full bg-brand-red text-center font-display text-xs font-bold uppercase leading-tight text-brand-tile shadow-card sm:right-4 sm:top-8 sm:h-24 sm:w-24 sm:text-sm">A WOW<br />favorite</span>
+            </motion.div>}
+            <div className="px-1 sm:pl-6">
+              <motion.p initial={reduceMotion ? false : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="text-xs font-bold uppercase tracking-[.22em] text-brand-red">Made for the good mood</motion.p>
+              <motion.h1 initial={reduceMotion ? false : { opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .55 }} className="mt-3 font-display text-4xl font-extrabold leading-[.95] tracking-tight text-brand-choc sm:text-6xl">Golden<br />Longest Fries</motion.h1>
+              <p className="mt-3 font-display text-lg font-bold text-brand-red sm:text-xl">{featured?.price}</p>
+              <motion.p initial={reduceMotion ? false : { opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: .2 }} className="mt-4 max-w-sm text-sm leading-relaxed text-brand-choc/75 sm:text-base">Long, golden, and crisp all the way through. The signature WOW Potato favorite.</motion.p>
+              <motion.a href="#menu-selections" whileHover={reduceMotion ? undefined : { y: -2 }} className="mt-6 inline-flex items-center gap-2 rounded-full bg-brand-red px-5 py-3 text-xs font-bold uppercase tracking-wider text-brand-tile shadow-card transition-colors hover:bg-brand-choc focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-choc">Explore the menu <span aria-hidden="true">↓</span></motion.a>
             </div>
-          )}
-          <p className="mx-auto mt-6 max-w-3xl text-center text-sm text-brand-choc/75">
-            Menu items shown are sample content. Availability may vary by store.
-          </p>
+          </div>
+          <svg className="relative -mb-px block h-10 w-full fill-brand-cream sm:h-16" viewBox="0 0 1440 100" preserveAspectRatio="none" aria-hidden="true"><path d="M0 36C240 106 403 105 660 56s492-84 780-8v52H0z" /></svg>
+        </section>
+
+        <div id="menu-selections" className="container-x pb-12 pt-5 sm:pb-20 sm:pt-8">
+          <div className="mx-auto max-w-5xl">
+            <MenuCollection title="Signature fries" items={fries} reduceMotion={reduceMotion} startIndex={1} />
+            <MenuCollection title="Snacks" items={snacks} reduceMotion={reduceMotion} startIndex={1 + fries.length} />
+            <p className="mt-10 text-center text-xs text-brand-choc/55">Menu items shown are sample content. Availability may vary by store.</p>
+          </div>
         </div>
-      </section>
+      </div>
       <FinalCTA location="menu_page" />
     </>
   );

@@ -12,6 +12,7 @@ export const MENU_HERO = {
 };
 
 export const MENU = [
+  { id: 'golden-longest-fries', name: 'Golden Longest Fries', price: 'USD 3.99', image: '/images/Golden.png', emoji: '🍟', bg: 'bg-[#3B2418]', text: 'text-white' },
   { id: 'signature-mix', name: 'Signature Mix', price: 'USD 3.57', image: '/images/menu/signature-mix.png', emoji: '🍟', bg: 'bg-[#FFB800]', text: 'text-brand-choc' },
   { id: 'spicy-long-potato', name: 'Spicy Long Potato', price: 'USD 3.57', image: '/images/menu/spicy-long-potato.png', emoji: '🌶️', bg: 'bg-[#B3122E]', text: 'text-white' },
   { id: 'chicken-pop', name: 'Chicken Pop', price: '', image: '/images/menu/chicken-pop.png', emoji: '🍗', bg: 'bg-[#3B2418]', text: 'text-white' },
