@@ -14,8 +14,9 @@ export function Logo({ light = false, imageOnly = false }) {
       <motion.img
         src={imageOnly ? MASCOT_LOGO_IMAGE : LOGO_IMAGE}
         alt="WOW POTATO"
-        whileHover={{ rotate: [0, -15, 15, -8, 0] }}
-        transition={{ duration: 0.6 }}
+        whileHover={{ scale: 1.12, y: -4 }}
+        whileTap={{ scale: 0.96 }}
+        transition={{ type: 'spring', stiffness: 400, damping: 16 }}
         className={imageOnly ? 'h-[72px] w-auto max-w-[180px] object-contain' : 'h-11 w-11 object-contain'}
       />
       {!imageOnly && (
@@ -24,6 +25,21 @@ export function Logo({ light = false, imageOnly = false }) {
         </span>
       )}
     </Link>
+  );
+}
+
+// Animated crown: the wrapper handles centering, the image handles motion
+function Crown({ size = 'h-3 w-3' }) {
+  return (
+    <span aria-hidden="true" className="pointer-events-none absolute -top-3 left-1/2 -translate-x-1/2">
+      <motion.img
+        src="/images/crown.png"
+        alt=""
+        className={`${size} object-contain`}
+        animate={{ y: [0, -3, 0], rotate: [-10, 10, -10], scale: [1, 1.15, 1] }}
+        transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
+      />
+    </span>
   );
 }
 
@@ -40,18 +56,24 @@ export default function Header() {
   }, []);
   useEffect(() => setOpen(false), [pathname]);
 
+  const headerStyle = (pathname === '/story' || pathname === '/') && !scrolled && !open
+    ? 'bg-brand-yellow'
+    : pathname === '/login' || scrolled || open
+      ? 'bg-brand-cream/95 shadow-card backdrop-blur-md'
+      : 'bg-transparent';
+
   return (
-    <header className={`fixed inset-x-0 top-0 z-50 border-b border-[#9A041F] transition-all duration-300 ${pathname === '/story' && !scrolled && !open ? 'bg-brand-yellow' : pathname === '/login' || scrolled || open ? 'bg-brand-cream/95 shadow-card backdrop-blur-md' : 'bg-transparent'}`}>
-      <div className="container-x flex h-[96px] items-center justify-between gap-3">
+    <header className={`fixed inset-x-0 top-0 z-50 border-b border-[#9A041F] transition-all duration-300 ${headerStyle}`}>
+      <div className="container-x flex h-[96px] items-center justify-between gap-6">
         <Logo imageOnly />
 
-        <nav className="hidden items-center gap-3 2xl:gap-5 xl:flex" aria-label="Main">
+        <nav className="hidden items-center gap-5 2xl:gap-7 xl:flex" aria-label="Main">
           {NAV.map((n) => (
             <NavLink key={n.to} to={n.to} className="text-sm font-semibold transition-colors hover:text-brand-red">
               {({ isActive }) => (
                   <span className="relative py-1">
                     <span className={n.to === '/franchise' ? 'relative inline-flex' : ''}>
-                      {n.to === '/franchise' && <img src="/images/crown.png" alt="" aria-hidden="true" className="absolute -top-3 left-1/2 h-3 w-3 -translate-x-1/2 object-contain" />}
+                      {n.to === '/franchise' && <Crown />}
                       {n.label}
                     </span>
                   {isActive && <motion.span layoutId="nav-underline" className="absolute -bottom-0.5 left-0 right-0 h-1 rounded-full bg-brand-red" />}
@@ -90,7 +112,7 @@ export default function Header() {
                 <motion.div key={n.to} initial={{ x: -20, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: i * 0.04 }}>
                   <NavLink to={n.to} className={({ isActive }) => `block rounded-2xl px-4 py-3 font-display text-2xl font-semibold ${isActive ? 'bg-brand-yellow' : 'hover:bg-brand-yellow/40'}`}>
                     <span className={n.to === '/franchise' ? 'relative inline-flex' : ''}>
-                      {n.to === '/franchise' && <img src="/images/crown.png" alt="" aria-hidden="true" className="absolute -top-3 left-1/2 h-4 w-4 -translate-x-1/2 object-contain" />}
+                      {n.to === '/franchise' && <Crown size="h-4 w-4" />}
                       {n.label}
                     </span>
                   </NavLink>

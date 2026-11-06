@@ -6,7 +6,7 @@ export const SITE = {
   phone: '+855 12 333 444', // TODO: real phone
   email: 'hello@wowpotato.com', // TODO: real email
   address: 'Phnom Penh, Cambodia',
-  social: { facebook: 'https://www.facebook.com/share/1F2xKhRiRY/?mibextid=wwXIfr', instagram: 'https://www.instagram.com/wowpotatocambodia?xtok=czQxMXFmOTExdHVs', tiktok: 'https://www.tiktok.com/@wowpotatocambodia?is_from_webapp=1&sender_device=pc', youtube: '#' }, // TODO: real links
+  social: { facebook: 'https://www.facebook.com/share/1F2xKhRiRY/?mibextid=wwXIfr', instagram: 'https://www.instagram.com/wowpotatocambodia?xtok=czQxMXFmOTExdHVs', tiktok: 'https://www.tiktok.com/@wowpotatocambodia?is_from_webapp=1&sender_device=pc', youtube: 'https://www.youtube.com/@Wowpotato-Cambodia' }, // TODO: real links
 };
 
 export const NAV = [

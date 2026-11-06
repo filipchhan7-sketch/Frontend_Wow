@@ -29,7 +29,7 @@ export default function Story() {
             <motion.h1
               id="story-hero-title"
               initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-5 max-w-2xl whitespace-pre-line text-4xl font-bold leading-[1.02] text-brand-choc sm:text-5xl lg:text-6xl"
+              className="mt-5 max-w-2xl whitespace-pre-line text-4xl font-bold leading-[1.02] tracking-[0.02em] text-brand-choc sm:text-5xl lg:text-6xl"
             >
               WE DON’T JUST SELL POTATOES.{'\n'}<span className="text-brand-red">WE DELIVER SMILES.</span>
             </motion.h1>

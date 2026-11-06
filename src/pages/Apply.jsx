@@ -8,9 +8,10 @@ import { submitLead } from '../lib/api';
 import { track } from '../lib/analytics';
 
 const INITIAL = {
-  territoryCountry: '', firstName: '', lastName: '', personalAddress: '',
-  email: '', phone: '',
+  territoryCountry: '', firstName: '', lastName: '',
+  email: '', contactPlatform: '', phone: '',
 };
+const CONTACT_PLATFORMS = ['WhatsApp', 'Telegram', 'LINE', 'Zalo'];
 const DRAFT_KEY = 'wp_franchise_application_draft';
 
 function readDraft() {
@@ -67,7 +68,7 @@ export default function Apply() {
   const submit = async (event) => {
     event.preventDefault();
     const nextErrors = {};
-    ['territoryCountry', 'firstName', 'lastName', 'personalAddress', 'email', 'phone'].forEach((key) => {
+    ['territoryCountry', 'firstName', 'lastName', 'email', 'contactPlatform', 'phone'].forEach((key) => {
       if (!String(d[key]).trim()) nextErrors[key] = 'Required';
     });
     if (d.email && !/^\S+@\S+\.\S+$/.test(d.email)) nextErrors.email = 'Enter a valid email';
@@ -120,7 +121,7 @@ export default function Apply() {
 
             <div className="grid gap-5 sm:grid-cols-2">
               <div className="block sm:col-span-2">
-                <label htmlFor="franchise-country-interest" className="mb-1.5 block text-sm font-bold">Country of Interest<span className="text-brand-red"> *</span></label>
+                <label htmlFor="franchise-country-interest" className="mb-1.5 block text-sm font-bold">Country<span className="text-brand-red"> *</span></label>
                 <CountrySelect id="franchise-country-interest" value={d.territoryCountry} onPick={pickCountry} error={!!errors.territoryCountry} />
                 {errors.territoryCountry && <span role="alert" className="mt-1 block text-xs font-semibold text-brand-red">{errors.territoryCountry}</span>}
               </div>
@@ -131,15 +132,34 @@ export default function Apply() {
               <Field label="Last Name" required error={errors.lastName}>
                 {input('lastName', { autoComplete: 'family-name', placeholder: 'Last name' })}
               </Field>
-              <Field label="Personal Address" required error={errors.personalAddress} className="sm:col-span-2">
-                <textarea className={`input min-h-24 resize-y ${errors.personalAddress ? 'input-error' : ''}`} value={d.personalAddress} onChange={(event) => set('personalAddress')(event.target.value)} autoComplete="street-address" placeholder="Street, city, postal code" rows={3} />
-              </Field>
-
               <div className="sm:col-span-2">
                 <label htmlFor="franchise-phone" className="mb-1.5 block text-sm font-bold">Phone Number<span className="text-brand-red"> *</span></label>
                 <PhoneInput id="franchise-phone" value={d.phone} onChange={set('phone')} error={!!errors.phone} />
+                <span className="mt-1.5 block text-xs text-brand-choc/60">Enter the phone number linked to your {d.contactPlatform || 'selected app'} account.</span>
                 {errors.phone && <span role="alert" className="mt-1 block text-xs font-semibold text-brand-red">{errors.phone}</span>}
               </div>
+
+              <fieldset className="sm:col-span-2">
+                <legend className="mb-1.5 block text-sm font-bold">Preferred Contact Platform<span className="text-brand-red"> *</span></legend>
+                <p className="mb-3 text-xs text-brand-choc/60">Choose the app you use most so our team knows how to contact you.</p>
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                  {CONTACT_PLATFORMS.map((platform) => {
+                    const selected = d.contactPlatform === platform;
+                    return (
+                      <button
+                        key={platform}
+                        type="button"
+                        aria-pressed={selected}
+                        onClick={() => set('contactPlatform')(platform)}
+                        className={`rounded-2xl border-2 px-4 py-3 text-sm font-bold transition ${selected ? 'border-brand-orange bg-brand-yellow/40 text-brand-choc' : 'border-brand-choc/10 bg-white hover:border-brand-orange'}`}
+                      >
+                        {platform}
+                      </button>
+                    );
+                  })}
+                </div>
+                {errors.contactPlatform && <span role="alert" className="mt-1 block text-xs font-semibold text-brand-red">{errors.contactPlatform}</span>}
+              </fieldset>
 
               <Field label="Email Address" required error={errors.email} className="sm:col-span-2">
                 {input('email', { type: 'email', inputMode: 'email', autoComplete: 'email', placeholder: 'you@example.com' })}

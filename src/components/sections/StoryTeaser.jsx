@@ -8,7 +8,7 @@ export default function StoryTeaser() {
       <div className="container-x grid items-center gap-12 lg:grid-cols-2">
         <Reveal>
           <span className="chip">Our story</span>
-          <h2 className="mt-3 text-4xl font-bold leading-[1.05] sm:text-6xl">WE DON’T JUST SELL POTATOES.<br /><span className="text-brand-red">WE DELIVER SMILES.</span></h2>
+          <h2 className="mt-3 font-display text-4xl font-bold leading-[1.05] tracking-[0.02em] sm:text-6xl">WE DON’T JUST SELL POTATOES.<br /><span className="text-brand-red">WE DELIVER SMILES.</span></h2>
           <p className="mt-5 max-w-lg text-lg text-brand-choc/75">{VISION}</p>
           <div className="mt-8"><Button to="/story" variant="dark">Read our story →</Button></div>
         </Reveal>

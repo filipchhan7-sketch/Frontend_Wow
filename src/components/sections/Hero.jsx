@@ -1,63 +1,85 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import Button, { FranchiseCTA } from '../Button';
-import EmojiIcon from '../EmojiIcon';
 
-const line = (words, base) => words.map((w, i) => (
-  <span key={w + i} className="mr-3 inline-block overflow-hidden align-bottom">
-    <motion.span className="inline-block" initial={{ y: '110%' }} animate={{ y: 0 }} transition={{ delay: base + i * 0.09, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}>{w}</motion.span>
+const line = (words, base) => (
+  <span className="flex flex-wrap gap-x-[0.26em] lg:flex-nowrap">
+    {words.map((word, index) => (
+      <span key={`${word}-${index}`} className="inline-block overflow-hidden pb-[0.08em] -mb-[0.08em]">
+        <motion.span
+          className="inline-block whitespace-nowrap"
+          initial={{ y: '110%' }}
+          animate={{ y: 0 }}
+          transition={{ delay: base + index * 0.09, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        >
+          {word}
+        </motion.span>
+      </span>
+    ))}
   </span>
-));
+);
 
-const BADGES = [
-  { e: '😊', cls: 'left-2 top-10 sm:left-0', d: 0 }, { e: '🧀', cls: 'right-2 top-24 sm:right-0', d: 0.6 },
-  { e: '🥔', cls: 'bottom-24 left-0', d: 1.1 }, { e: '✨', cls: 'bottom-10 right-6', d: 0.3 },
-];
+// transparent on the left (where the text is), full photo on the right
+const fadeMask =
+  'linear-gradient(90deg, transparent 0%, transparent 14%, rgba(0,0,0,0.6) 32%, #000 52%)';
 
 export default function Hero() {
-  const shouldReduceMotion = useReducedMotion();
+  const reduceMotion = useReducedMotion();
 
   return (
-    <section className="relative overflow-hidden bg-brand-yellow pb-20 pt-36 sm:pt-44">
-      <div className="absolute -right-32 -top-32 h-[32rem] w-[32rem] rounded-full bg-brand-orange/40 blur-3xl" />
-      <div className="absolute -bottom-40 -left-24 h-[28rem] w-[28rem] rounded-full bg-brand-tile/50 blur-3xl" />
-      <div className="container-x relative grid items-center gap-10 lg:grid-cols-2">
-        <div>
-          <motion.span initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="chip bg-brand-tile/70">🇰🇭 Proudly from Cambodia</motion.span>
-          <h1 className="mt-5 text-5xl font-bold leading-[0.95] sm:text-7xl xl:text-8xl">
+    <section className="relative isolate overflow-hidden bg-[#fff8f1] pb-10 pt-28 sm:pt-36 lg:min-h-[620px] lg:pb-16">
+      {/* soft warm glow behind the text */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_15%_40%,rgba(255,190,45,0.22),transparent_50%)]"
+      />
+
+      {/* BACKGROUND PHOTO: right side only, below the navbar, never under the text */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none relative z-0 mx-4 mt-8 h-72 rounded-3xl bg-contain bg-center bg-no-repeat sm:h-96 lg:absolute lg:inset-y-0 lg:right-0 lg:top-28 lg:mx-0 lg:mt-0 lg:h-auto lg:w-[56%] lg:rounded-none lg:bg-right-bottom lg:[-webkit-mask-image:linear-gradient(90deg,transparent_0%,transparent_14%,rgba(0,0,0,0.6)_32%,#000_52%)] lg:[mask-image:linear-gradient(90deg,transparent_0%,transparent_14%,rgba(0,0,0,0.6)_32%,#000_52%)]"
+        style={{ backgroundImage: "url('/images/A3%20Light.png')" }}
+      />
+
+      {/* TEXT: stays in the left half */}
+      <div className="container-x relative z-10 lg:absolute lg:inset-x-0 lg:top-28 lg:bottom-0 lg:flex lg:items-center">
+        <div className="min-w-0 lg:w-1/2">
+          <motion.span
+            initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="chip bg-brand-yellow px-4 py-2 text-sm font-bold text-brand-choc sm:text-base"
+          >
+            <span aria-hidden="true">🇰🇭</span> Proudly from Cambodia
+          </motion.span>
+
+          <h1
+            className="mt-5 font-display font-extrabold leading-[1.04] text-brand-choc"
+            style={{ fontSize: 'clamp(1.9rem, 3.3vw, 3.2rem)' }}
+          >
             <span className="block">{line(['THE', 'LONGEST', 'FRIES.'], 0.1)}</span>
             <span className="block text-brand-red">{line(['THE', 'BIGGEST', 'SMILES.'], 0.45)}</span>
           </h1>
-          <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9 }} className="mt-6 max-w-lg text-lg font-medium text-brand-choc/80">
-            Cambodia's most fun fries — long, golden and made to be shared.
+
+          <motion.p
+            initial={reduceMotion ? false : { opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.75 }}
+            className="mt-5 max-w-md text-base font-medium leading-relaxed text-brand-choc/80 sm:text-lg"
+          >
+            More Than Fries. It's a WOW Experience.
           </motion.p>
-          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.05 }} className="mt-8 flex flex-wrap items-center gap-4">
-            <FranchiseCTA location="hero" />
-            <Button to="/menu" variant="outline" size="lg">Explore WOW POTATO</Button>
+
+          <motion.div
+            initial={reduceMotion ? false : { opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.9 }}
+            className="mt-7 flex flex-wrap items-center gap-3"
+          >
+            <FranchiseCTA location="hero" size="md" />
+            <Button to="/menu" variant="outline" size="md">
+              Explore the menu <span aria-hidden="true">→</span>
+            </Button>
           </motion.div>
         </div>
-
-        <motion.div
-          initial={shouldReduceMotion ? false : { opacity: 0, y: 12, scale: 0.98, rotate: -2 }}
-          animate={{ opacity: 1, y: 0, scale: 1, rotate: 0 }}
-          transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 90, damping: 18, delay: 0.2 }}
-          className="relative mx-auto w-full max-w-md"
-        >
-
-          <div className="absolute inset-6 rounded-full bg-brand-tile/50" />
-          <motion.img
-            src="/images/Golden.png"
-            alt="Illustration of WOW POTATO's golden longest fries"
-            className="motion-safe:animate-float relative z-10 block h-auto w-full object-contain drop-shadow-2xl"
-            initial={false}
-          />
-          {BADGES.map((b) => (
-            <motion.span key={b.e} className={`absolute grid h-14 w-14 place-items-center rounded-full bg-brand-tile text-3xl shadow-card ${b.cls}`}
-              animate={shouldReduceMotion ? undefined : { y: [0, -12, 0], rotate: [0, 8, -8, 0] }}
-              transition={shouldReduceMotion ? undefined : { duration: 4, repeat: Infinity, delay: b.d }}>
-              <EmojiIcon emoji={b.e} className="h-9 w-14" />
-            </motion.span>
-          ))}
-        </motion.div>
       </div>
     </section>
   );
