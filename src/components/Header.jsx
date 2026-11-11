@@ -10,13 +10,10 @@ const MASCOT_LOGO_IMAGE = '/images/wow-logo.png';
 
 export function Logo({ light = false, imageOnly = false }) {
   return (
-    <Link to="/" className="group flex items-center gap-2" aria-label="WOW POTATO home">
-      <motion.img
+    <Link to="/home" className="group flex items-center gap-2" aria-label="WOW POTATO home">
+      <img
         src={imageOnly ? MASCOT_LOGO_IMAGE : LOGO_IMAGE}
         alt="WOW POTATO"
-        whileHover={{ scale: 1.12, y: -4 }}
-        whileTap={{ scale: 0.96 }}
-        transition={{ type: 'spring', stiffness: 400, damping: 16 }}
         className={imageOnly ? 'h-[72px] w-auto max-w-[180px] object-contain' : 'h-11 w-11 object-contain'}
       />
       {!imageOnly && (
@@ -56,7 +53,7 @@ export default function Header() {
   }, []);
   useEffect(() => setOpen(false), [pathname]);
 
-  const headerStyle = (pathname === '/story' || pathname === '/') && !scrolled && !open
+  const headerStyle = (pathname === '/story' || pathname === '/' || pathname === '/home') && !scrolled && !open
     ? 'bg-brand-yellow'
     : pathname === '/login' || scrolled || open
       ? 'bg-brand-cream/95 shadow-card backdrop-blur-md'
@@ -64,12 +61,12 @@ export default function Header() {
 
   return (
     <header className={`fixed inset-x-0 top-0 z-50 border-b border-[#9A041F] transition-all duration-300 ${headerStyle}`}>
-      <div className="container-x flex h-[96px] items-center justify-between gap-6">
+      <div className="container-x flex h-[96px] items-center justify-between gap-4 2xl:gap-6">
         <Logo imageOnly />
 
-        <nav className="hidden items-center gap-5 2xl:gap-7 xl:flex" aria-label="Main">
+        <nav className="hidden items-center gap-3 2xl:gap-5 xl:flex" aria-label="Main">
           {NAV.map((n) => (
-            <NavLink key={n.to} to={n.to} className="text-sm font-semibold transition-colors hover:text-brand-red">
+            <NavLink key={n.to} to={n.to} className="whitespace-nowrap text-sm font-semibold transition-colors hover:text-brand-red">
               {({ isActive }) => (
                   <span className="relative py-1">
                     <span className={n.to === '/franchise' ? 'relative inline-flex' : ''}>

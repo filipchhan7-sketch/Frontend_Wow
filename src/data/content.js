@@ -12,11 +12,9 @@ export const SITE = {
 export const NAV = [
   { to: '/story', label: 'Our Story' },
   { to: '/franchise', label: 'Franchise' },
-  { to: '/why-wow', label: 'Why WOW' },
   { to: '/menu', label: 'Menu' },
   { to: '/stores', label: 'Stores' },
   { to: '/events', label: 'Events' },
-  { to: '/news', label: 'News' },
 ];
 
 export const MARQUEE = ['From Cambodia to the World', 'Longest Fries', 'Biggest Smiles', 'Made Fresh', 'Fun for Everyone', 'Franchise Opportunities'];

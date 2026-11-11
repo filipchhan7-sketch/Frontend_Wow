@@ -25,7 +25,7 @@ export default function Story() {
         <div aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(ellipse_at_18%_38%,rgba(255,190,45,0.2),transparent_42%),linear-gradient(90deg,#fff8f1_0%,rgba(255,248,241,0.98)_42%,rgba(255,248,241,0.78)_61%,rgba(255,248,241,0.08)_100%)]" />
         <div className="container-x relative z-10 grid min-h-[420px] items-center lg:min-h-[490px] lg:grid-cols-[1.08fr_0.92fr]">
           <div className="max-w-2xl">
-            <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="chip bg-brand-yellow/80">Our story</motion.span>
+            {/* <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="chip bg-brand-yellow/80">Our story</motion.span> */}
             <motion.h1
               id="story-hero-title"
               initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
@@ -43,15 +43,37 @@ export default function Story() {
         </div>
       </section>
 
-      <section className="section">
-        <div className="container-x grid gap-8 lg:grid-cols-2">
-          <Reveal><div className="card h-full bg-brand-choc text-brand-tile"><span className="chip">Vision</span><p className="mt-4 font-display text-3xl font-semibold leading-snug">{VISION}</p></div></Reveal>
-          <Reveal delay={0.1}>
-            <div className="card h-full"><span className="chip">Mission</span>
-              <p className="mt-4 font-display text-2xl font-semibold">Deliver smiles through…</p>
-              <ul className="mt-4 grid gap-2 sm:grid-cols-2">{MISSION.map((m) => <li key={m} className="flex items-center gap-2 font-medium"><span className="text-brand-red">●</span>{m}</li>)}</ul>
+      <section className="py-10 sm:py-14">
+        <div className="container-x">
+          <div className="card relative mx-auto max-w-4xl overflow-hidden px-5 py-7 sm:px-10 sm:py-9">
+            <div className="relative grid grid-cols-1 gap-y-7 py-2 sm:grid-cols-2 sm:gap-x-12 lg:gap-x-24">
+            <div aria-hidden="true" className="pointer-events-none absolute bottom-[10%] left-1/2 top-[10%] hidden w-3 -translate-x-1/2 -rotate-[22deg] lg:block">
+              <span className="absolute left-0 top-0 h-full w-[2px] rounded-full bg-brand-choc/80" />
+              <span className="absolute left-[5px] top-0 h-full w-px rounded-full bg-brand-choc/60" />
             </div>
-          </Reveal>
+            <Reveal>
+              <article className="col-start-1 row-start-1 px-1 sm:px-4">
+                <h2 className="font-display text-3xl font-bold tracking-tight text-brand-red sm:text-5xl">Vision</h2>
+                <div aria-hidden="true" className="mt-3 w-20 space-y-1 sm:mt-4 sm:w-32">
+                  <span className="block h-[2px] rounded-full bg-brand-red" />
+                  <span className="block h-px rounded-full bg-brand-red/70" />
+                </div>
+                <p className="mt-4 max-w-sm text-sm leading-relaxed text-brand-choc/75 sm:text-base">{VISION}</p>
+              </article>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <article className="col-start-1 row-start-2 px-1 sm:col-start-2 sm:row-start-2 sm:mt-8 sm:px-4 lg:mt-16">
+                <h2 className="font-display text-3xl font-bold tracking-tight text-brand-orange sm:text-5xl">Mission</h2>
+                <div aria-hidden="true" className="mt-3 w-20 space-y-1 sm:mt-4 sm:w-32">
+                  <span className="block h-[2px] rounded-full bg-brand-orange" />
+                  <span className="block h-px rounded-full bg-brand-orange/70" />
+                </div>
+                <p className="mt-4 font-display text-lg font-semibold sm:text-xl">Deliver smiles through…</p>
+                <ul className="mt-2 grid gap-x-4 gap-y-1 sm:grid-cols-2">{MISSION.map((m) => <li key={m} className="flex items-start gap-2 text-xs leading-relaxed font-medium sm:text-sm"><span aria-hidden="true" className="mt-1 text-brand-red">●</span>{m}</li>)}</ul>
+              </article>
+            </Reveal>
+            </div>
+          </div>
         </div>
       </section>
 

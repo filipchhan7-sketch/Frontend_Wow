@@ -33,12 +33,13 @@ export default function Hero() {
         className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_15%_40%,rgba(255,190,45,0.22),transparent_50%)]"
       />
 
-      {/* BACKGROUND PHOTO: right side only, below the navbar, never under the text */}
+      {/* Golden fries artwork: right side, kept clear of the headline and actions */}
       <div
         aria-hidden="true"
-        className="pointer-events-none relative z-0 mx-4 mt-8 h-72 rounded-3xl bg-contain bg-center bg-no-repeat sm:h-96 lg:absolute lg:inset-y-0 lg:right-0 lg:top-28 lg:mx-0 lg:mt-0 lg:h-auto lg:w-[56%] lg:rounded-none lg:bg-right-bottom lg:[-webkit-mask-image:linear-gradient(90deg,transparent_0%,transparent_14%,rgba(0,0,0,0.6)_32%,#000_52%)] lg:[mask-image:linear-gradient(90deg,transparent_0%,transparent_14%,rgba(0,0,0,0.6)_32%,#000_52%)]"
-        style={{ backgroundImage: "url('/images/A3%20Light.png')" }}
-      />
+        className="pointer-events-none relative z-0 mx-4 mt-8 h-72 sm:h-96 lg:absolute lg:inset-y-0 lg:right-0 lg:top-28 lg:mx-0 lg:mt-0 lg:h-auto lg:w-[56%] lg:[-webkit-mask-image:linear-gradient(90deg,transparent_0%,transparent_14%,rgba(0,0,0,0.6)_32%,#000_52%)] lg:[mask-image:linear-gradient(90deg,transparent_0%,transparent_14%,rgba(0,0,0,0.6)_32%,#000_52%)]"
+      >
+        <img src="/images/Golden.png" alt="" className="h-full w-full object-contain" />
+      </div>
 
       {/* TEXT: stays in the left half */}
       <div className="container-x relative z-10 lg:absolute lg:inset-x-0 lg:top-28 lg:bottom-0 lg:flex lg:items-center">

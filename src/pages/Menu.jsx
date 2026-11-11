@@ -1,6 +1,7 @@
 ﻿import { motion, useReducedMotion } from 'framer-motion';
 import { MENU } from '../data/menu';
 import FinalCTA from '../components/sections/FinalCTA';
+import Button from '../components/Button';
 
 const PHOTOS = {
   'golden-longest-fries': '/images/Golden.png',
@@ -100,7 +101,7 @@ export default function Menu() {
                   transition={{ duration: 0.45, delay: 0.35, ease: POP_EASE }}
                   className="absolute right-2 top-3 grid h-20 w-20 place-items-center rounded-full bg-brand-red text-center font-display text-xs font-bold uppercase leading-tight text-brand-tile shadow-card sm:right-4 sm:top-8 sm:h-24 sm:w-24 sm:text-sm"
                 >
-                  A WOW<br />favorite
+                  TOP<br />ONE
                 </motion.span>
               </div>
             )}
@@ -113,8 +114,11 @@ export default function Menu() {
                 <p className="text-xs font-bold uppercase tracking-[.22em] text-brand-red">Made for the good mood</p>
                 <h1 className="mt-3 font-display text-4xl font-extrabold leading-[.95] tracking-tight text-brand-choc sm:text-6xl">Golden<br />Longest Fries</h1>
                 <p className="mt-3 font-display text-lg font-bold text-brand-red sm:text-xl">{featured?.price}</p>
-                <p className="mt-4 max-w-sm text-sm leading-relaxed text-brand-choc/75 sm:text-base">Long, golden, and crisp all the way through. The signature WOW Potato favorite.</p>
-                <a href="#menu-selections" className="mt-6 inline-flex items-center gap-2 rounded-full bg-brand-red px-5 py-3 text-xs font-bold uppercase tracking-wider text-brand-tile shadow-card transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-choc active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-choc">Explore the menu <span aria-hidden="true">↓</span></a>
+                {/* <p className="mt-4 max-w-sm text-sm leading-relaxed text-brand-choc/75 sm:text-base">Long, golden, and crisp all the way through. The signature WOW Potato favorite.</p> */}
+                <div className="mt-6 flex flex-wrap items-center gap-3">
+                  <a href="#menu-selections" className="inline-flex items-center gap-2 rounded-full bg-brand-red px-5 py-3 text-xs font-bold uppercase tracking-wider text-brand-tile shadow-card transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-choc active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-choc">Explore the menu <span aria-hidden="true">↓</span></a>
+                  <Button to="/stores" variant="dark" size="sm">Find a store <span aria-hidden="true">→</span></Button>
+                </div>
               </motion.div>
             </div>
           </div>

@@ -27,6 +27,17 @@
   .section { @apply py-20 sm:py-28; }
   .chip { @apply inline-flex items-center gap-1 rounded-full bg-brand-yellow/60 px-3 py-1 text-xs font-bold uppercase tracking-wider; }
   .card { @apply rounded-3xl border border-brand-choc/5 bg-brand-tile p-6 shadow-card; }
+  .slanted-card { @apply relative border-transparent; }
+  .slanted-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 2px solid rgb(var(--brand-scarlet) / 0.55);
+    border-radius: inherit;
+    transform: rotate(-1.25deg);
+    pointer-events: none;
+  }
+  .slanted-card-dark::before { border-color: rgb(var(--brand-yellow) / 0.7); }
   .input {
     @apply w-full rounded-2xl border-2 border-brand-choc/10 bg-brand-tile px-4 py-3 text-sm font-medium outline-none transition
            placeholder:text-brand-choc/35 focus:border-brand-orange focus:ring-4 focus:ring-brand-yellow/40;

@@ -9,7 +9,7 @@ import { track } from '../lib/analytics';
 
 const INITIAL = {
   territoryCountry: '', firstName: '', lastName: '',
-  email: '', contactPlatform: '', phone: '',
+  email: '', contactPlatform: '', otherContactPlatform: '', phone: '',
 };
 const CONTACT_PLATFORMS = ['WhatsApp', 'Telegram', 'LINE', 'Zalo'];
 const DRAFT_KEY = 'wp_franchise_application_draft';
@@ -71,6 +71,9 @@ export default function Apply() {
     ['territoryCountry', 'firstName', 'lastName', 'email', 'contactPlatform', 'phone'].forEach((key) => {
       if (!String(d[key]).trim()) nextErrors[key] = 'Required';
     });
+    if (d.contactPlatform === 'Other' && !d.otherContactPlatform.trim()) {
+      nextErrors.otherContactPlatform = 'Please enter your preferred platform';
+    }
     if (d.email && !/^\S+@\S+\.\S+$/.test(d.email)) nextErrors.email = 'Enter a valid email';
     if (d.phone && d.phone.replace(/\D/g, '').length < 7) nextErrors.phone = 'Enter a valid phone number';
     setErrors(nextErrors);
@@ -82,6 +85,7 @@ export default function Apply() {
       const fullName = `${d.firstName.trim()} ${d.lastName.trim()}`;
       const res = await submitLead({
         ...d,
+        contactPlatform: d.contactPlatform === 'Other' ? d.otherContactPlatform.trim() : d.contactPlatform,
         fullName,
         country: d.territoryCountry,
       });
@@ -142,8 +146,8 @@ export default function Apply() {
               <fieldset className="sm:col-span-2">
                 <legend className="mb-1.5 block text-sm font-bold">Preferred Contact Platform<span className="text-brand-red"> *</span></legend>
                 <p className="mb-3 text-xs text-brand-choc/60">Choose the app you use most so our team knows how to contact you.</p>
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                  {CONTACT_PLATFORMS.map((platform) => {
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
+                  {[...CONTACT_PLATFORMS, 'Other'].map((platform) => {
                     const selected = d.contactPlatform === platform;
                     return (
                       <button
@@ -158,6 +162,13 @@ export default function Apply() {
                     );
                   })}
                 </div>
+                {d.contactPlatform === 'Other' && (
+                  <div className="mt-4">
+                    <label htmlFor="franchise-other-platform" className="mb-1.5 block text-sm font-bold">Platform name<span className="text-brand-red"> *</span></label>
+                    {input('otherContactPlatform', { id: 'franchise-other-platform', autoComplete: 'off', placeholder: 'Enter your preferred app or platform' })}
+                    {errors.otherContactPlatform && <span role="alert" className="mt-1 block text-xs font-semibold text-brand-red">{errors.otherContactPlatform}</span>}
+                  </div>
+                )}
                 {errors.contactPlatform && <span role="alert" className="mt-1 block text-xs font-semibold text-brand-red">{errors.contactPlatform}</span>}
               </fieldset>
 

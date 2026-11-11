@@ -5,8 +5,9 @@ import EmojiIcon from '../components/EmojiIcon';
 
 export default function Franchise() {
   return (
+    // if you want add like headline on Bring ... ad in PageHeader only use this eyebrow="Franchise opportunity" 
     <>
-      <PageHeader eyebrow="Franchise opportunity" title={'BRING WOW POTATO\nTO YOUR CITY'} sub="Explore a franchise partnership with a memorable fries brand." emoji="🌆">
+      <PageHeader title={'BRING WOW POTATO\nTO YOUR CITY'} sub="Explore a franchise partnership with a memorable fries brand." heroBackground="/images/A3%20Light.png">
         <FranchiseCTA location="franchise_hero">Start your franchise journey →</FranchiseCTA>
       </PageHeader>
 

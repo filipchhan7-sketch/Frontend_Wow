@@ -54,8 +54,9 @@ export default function Events() {
   const cls = (k) => `input ${errors[k] ? 'input-error' : ''}`;
 
   return (
+    // eyebrow="WOW POTATO events"
     <>
-      <PageHeader eyebrow="WOW POTATO events" title={'BRING THE\nWOW TO YOU'} sub="Parties, schools, companies, festivals and brand activations." emoji="🎉" />
+      <PageHeader title={'BRING THE\nWOW TO YOU'} sub="Parties, schools, companies, festivals and brand activations." emoji="🎉" />
       <section className="section">
         <div className="container-x">
           <SectionTitle eyebrow="We do events" title="WHAT CAN WE CATER?" />
