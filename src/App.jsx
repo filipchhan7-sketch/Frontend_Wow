@@ -4,7 +4,6 @@ import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Story from './pages/Story';
-import WhyWowPage from './pages/WhyWowPage';
 import Menu from './pages/Menu';
 import Stores from './pages/Stores';
 import Franchise from './pages/Franchise';
@@ -18,6 +17,7 @@ import Legal from './pages/Legal';
 import NotFound from './pages/NotFound';
 import Login from './pages/Login';
 import Home from './pages/Home';
+import AdminDashboard from './admin/AdminDashboard';
 
 const Page = ({ children }) => (
   <motion.main initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.3 }}>
@@ -27,17 +27,18 @@ const Page = ({ children }) => (
 
 export default function App() {
   const location = useLocation();
+  const isAdminRoute = location.pathname.replace(/\/+$/, '') === '/admin';
   useEffect(() => { window.scrollTo({ top: 0 }); }, [location.pathname]);
 
   return (
     <MotionConfig reducedMotion="user">
-      <Header />
+      {!isAdminRoute && <Header />}
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
+          <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/" element={<Navigate to="/menu" replace />} />
           <Route path="/home" element={<Page><Home /></Page>} />
           <Route path="/story" element={<Page><Story /></Page>} />
-          <Route path="/why-wow" element={<Page><WhyWowPage /></Page>} />
           <Route path="/menu" element={<Page><Menu /></Page>} />
           <Route path="/stores" element={<Page><Stores /></Page>} />
           <Route path="/franchise" element={<Page><Franchise /></Page>} />
@@ -53,7 +54,7 @@ export default function App() {
           <Route path="/login" element={<Page><Login /></Page>} />
         </Routes>
       </AnimatePresence>
-      <Footer />
+      {!isAdminRoute && <Footer />}
     </MotionConfig>
   );
 }

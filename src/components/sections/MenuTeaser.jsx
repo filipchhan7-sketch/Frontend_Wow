@@ -26,7 +26,7 @@ export default function MenuTeaser() {
           <div className="relative flex min-h-[290px] items-center justify-center overflow-hidden bg-[#FFFDF8] px-5 py-6 sm:min-h-[390px] md:min-h-full md:px-6 lg:px-10">
             <div aria-hidden="true" className="absolute -left-16 top-10 h-48 w-48 rounded-full bg-brand-yellow/15 blur-2xl sm:h-64 sm:w-64" />
             <motion.img
-              src="/images/Golden.png"
+              src="/images/Longest-fries.png"
               alt="Golden WOW POTATO longest fries in the signature box"
               initial={reduceMotion ? false : { opacity: 0, scale: 0.94, rotate: -2 }}
               whileInView={{ opacity: 1, scale: 1, rotate: 0 }}

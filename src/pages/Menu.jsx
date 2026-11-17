@@ -4,7 +4,7 @@ import FinalCTA from '../components/sections/FinalCTA';
 import Button from '../components/Button';
 
 const PHOTOS = {
-  'golden-longest-fries': '/images/Golden.png',
+  'golden-longest-fries': '/images/Longest-fries.png',
   'signature-mix': '/images/Signature mix (2).png',
   'spicy-long-potato': '/images/spicy_.png',
   'chicken-pop': '/images/Chicken pop.png',
@@ -85,24 +85,49 @@ export default function Menu() {
             {featured && (
               <div className="relative mx-auto flex w-full max-w-xl items-center justify-center">
                 <span aria-hidden="true" className="absolute h-[82%] w-[82%] rounded-full bg-brand-tile/70" />
-                <motion.img
-                  src={PHOTOS[featured.id]}
-                  alt={featured.name}
-                  loading="eager"
-                  decoding="async"
-                  initial={reduceMotion ? false : { opacity: 0, y: 40, scale: 0.8 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{ duration: 0.6, ease: POP_EASE }}
-                  className="relative h-80 w-full scale-110 object-contain drop-shadow-[0_20px_18px_rgba(37,17,5,.2)] sm:h-[540px]"
-                />
-                <motion.span
+                <div className="relative">
+                  <motion.img
+                    src={PHOTOS[featured.id]}
+                    alt={featured.name}
+                    loading="eager"
+                    decoding="async"
+                    initial={reduceMotion ? false : { opacity: 0, y: 40, scale: 0.8 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    whileHover={reduceMotion ? undefined : { y: -6, scale: 1.14 }}
+                    transition={{ duration: 0.6, ease: POP_EASE }}
+                    className="relative h-80 w-full scale-110 object-contain drop-shadow-[0_20px_18px_rgba(37,17,5,.2)] sm:h-[540px]"
+                  />
+                  {!reduceMotion && (
+                    <motion.div
+                      aria-hidden="true"
+                      className="pointer-events-none absolute inset-0 scale-110"
+                      style={{
+                        backgroundImage: 'linear-gradient(105deg, transparent 44%, rgba(255,255,255,.18) 48%, rgba(255,255,255,.72) 50%, rgba(255,255,255,.18) 52%, transparent 56%)',
+                        backgroundSize: '250% 100%',
+                        backgroundPosition: '150% 50%',
+                        maskImage: `url("${PHOTOS[featured.id]}")`,
+                        WebkitMaskImage: `url("${PHOTOS[featured.id]}")`,
+                        maskSize: 'contain',
+                        WebkitMaskSize: 'contain',
+                        maskPosition: 'center',
+                        WebkitMaskPosition: 'center',
+                        maskRepeat: 'no-repeat',
+                        WebkitMaskRepeat: 'no-repeat',
+                      }}
+                      animate={{ backgroundPosition: ['150% 50%', '-150% 50%'] }}
+                      transition={{ duration: 2, repeat: Infinity, repeatDelay: 2.5, ease: 'easeInOut' }}
+                    />
+                  )}
+                </div>
+                <motion.div
                   initial={reduceMotion ? false : { scale: 0, rotate: -25 }}
                   animate={{ scale: 1, rotate: 0 }}
+                  whileHover={reduceMotion ? undefined : { y: -6, scale: 1.08, rotate: 3 }}
                   transition={{ duration: 0.45, delay: 0.35, ease: POP_EASE }}
-                  className="absolute right-2 top-3 grid h-20 w-20 place-items-center rounded-full bg-brand-red text-center font-display text-xs font-bold uppercase leading-tight text-brand-tile shadow-card sm:right-4 sm:top-8 sm:h-24 sm:w-24 sm:text-sm"
+                  className="absolute -right-2 top-0 h-20 w-20 overflow-hidden rounded-full sm:-right-2 sm:top-4 sm:h-24 sm:w-24"
                 >
-                  TOP<br />ONE
-                </motion.span>
+                  <img src="/images/Top (2).png" alt="Number one award badge" className="h-full w-full object-contain drop-shadow-[0_4px_6px_rgba(37,17,5,0.25)]" />
+                </motion.div>
               </div>
             )}
             <div className="px-1 sm:pl-6">
@@ -118,6 +143,7 @@ export default function Menu() {
                 <div className="mt-6 flex flex-wrap items-center gap-3">
                   <a href="#menu-selections" className="inline-flex items-center gap-2 rounded-full bg-brand-red px-5 py-3 text-xs font-bold uppercase tracking-wider text-brand-tile shadow-card transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-choc active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-choc">Explore the menu <span aria-hidden="true">↓</span></a>
                   <Button to="/stores" variant="dark" size="sm">Find a store <span aria-hidden="true">→</span></Button>
+                  <Button to="/franchise/apply" trackEvent location="menu_page" size="sm"><img src="/images/hana-na.png" alt="" aria-hidden="true" className="h-6 w-6 object-contain" />Become a Franchise Partner</Button>
                 </div>
               </motion.div>
             </div>
@@ -127,8 +153,8 @@ export default function Menu() {
 
         <div id="menu-selections" className="container-x pb-12 pt-5 sm:pb-20 sm:pt-8">
           <div className="mx-auto max-w-5xl">
-            <MenuCollection title="Signature fries" items={fries} reduceMotion={reduceMotion} startIndex={1} />
-            <MenuCollection title="Snacks" items={snacks} reduceMotion={reduceMotion} startIndex={1 + fries.length} />
+            <MenuCollection title="All Time Favorite Fries" items={fries} reduceMotion={reduceMotion} startIndex={1} />
+            <MenuCollection title="Chicken Lover" items={snacks} reduceMotion={reduceMotion} startIndex={1 + fries.length} />
             <p className="mt-10 text-center text-xs text-brand-choc/55">Menu items shown are sample content. Availability may vary by store.</p>
           </div>
         </div>

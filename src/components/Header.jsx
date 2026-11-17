@@ -42,6 +42,7 @@ function Crown({ size = 'h-3 w-3' }) {
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const [franchiseOpen, setFranchiseOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { pathname } = useLocation();
 
@@ -66,6 +67,18 @@ export default function Header() {
 
         <nav className="hidden items-center gap-3 2xl:gap-5 xl:flex" aria-label="Main">
           {NAV.map((n) => (
+            n.to === '/franchise' ? (
+              <div key={n.to} className="relative" onMouseEnter={() => setFranchiseOpen(true)} onMouseLeave={() => setFranchiseOpen(false)} onFocus={() => setFranchiseOpen(true)} onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setFranchiseOpen(false); }}>
+                <NavLink to={n.to} className="whitespace-nowrap text-sm font-semibold transition-colors hover:text-brand-red">
+                  {({ isActive }) => <span className="relative py-1"><span className="relative inline-flex"><Crown />{n.label}</span>{isActive && <motion.span layoutId="nav-underline" className="absolute -bottom-0.5 left-0 right-0 h-1 rounded-full bg-brand-red" />}</span>}
+                </NavLink>
+                <div className={`absolute left-1/2 top-full z-50 w-60 -translate-x-1/2 pt-3 transition-opacity duration-150 ${franchiseOpen ? 'visible opacity-100' : 'invisible opacity-0'}`}>
+                  <div className="rounded-2xl bg-white p-2 text-brand-choc shadow-xl ring-1 ring-brand-choc/10">
+                    {[['Franchise Opportunity', '/franchise'], ['International Franchise', '/international'], ['Franchise Application', '/franchise/apply']].map(([label, to]) => <Link key={to} to={to} className="block rounded-xl px-4 py-3 text-sm font-semibold hover:bg-brand-yellow/40">{label}</Link>)}
+                  </div>
+                </div>
+              </div>
+            ) : (
             <NavLink key={n.to} to={n.to} className="whitespace-nowrap text-sm font-semibold transition-colors hover:text-brand-red">
               {({ isActive }) => (
                   <span className="relative py-1">
@@ -77,6 +90,7 @@ export default function Header() {
                 </span>
               )}
             </NavLink>
+            )
           ))}
         </nav>
 
@@ -113,6 +127,7 @@ export default function Header() {
                       {n.label}
                     </span>
                   </NavLink>
+                  {n.to === '/franchise' && <div className="ml-5 border-l-2 border-brand-yellow pl-3">{[['Franchise Opportunity', '/franchise'], ['International Franchise', '/international'], ['Franchise Application', '/franchise/apply']].map(([label, to]) => <Link key={to} to={to} className="block rounded-xl px-4 py-2 text-sm font-semibold text-brand-choc/75 hover:bg-brand-yellow/40">{label}</Link>)}</div>}
                 </motion.div>
               ))}
               <Link to="/contact" className="rounded-2xl px-4 py-3 font-display text-2xl font-semibold hover:bg-brand-yellow/40">Contact</Link>

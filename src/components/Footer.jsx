@@ -3,7 +3,7 @@ import { SITE } from '../data/content';
 import { Logo } from './Header';
 
 const COLS = [
-  { title: 'Company', links: [['Our Story', '/story'], ['Why WOW Potato', '/why-wow'], ['News', '/news'], ['Contact', '/contact']] },
+  { title: 'Company', links: [['Our Story', '/story'], ['News', '/news'], ['Contact', '/contact']] },
   { title: 'Franchise', links: [['Franchise Opportunity', '/franchise'], ['International Franchise', '/international'], ['Franchise Application', '/franchise/apply']] },
   { title: 'Customer', links: [['Menu', '/menu'], ['Store Locator', '/stores'], ['Events', '/events']] },
 ];

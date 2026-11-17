@@ -46,13 +46,13 @@ export default function Story() {
       <section className="py-10 sm:py-14">
         <div className="container-x">
           <div className="card relative mx-auto max-w-4xl overflow-hidden px-5 py-7 sm:px-10 sm:py-9">
-            <div className="relative grid grid-cols-1 gap-y-7 py-2 sm:grid-cols-2 sm:gap-x-12 lg:gap-x-24">
+            <div className="relative grid grid-cols-1 items-stretch gap-y-7 py-2 sm:grid-cols-2 sm:gap-x-8 lg:gap-x-12">
             <div aria-hidden="true" className="pointer-events-none absolute bottom-[10%] left-1/2 top-[10%] hidden w-3 -translate-x-1/2 -rotate-[22deg] lg:block">
               <span className="absolute left-0 top-0 h-full w-[2px] rounded-full bg-brand-choc/80" />
               <span className="absolute left-[5px] top-0 h-full w-px rounded-full bg-brand-choc/60" />
             </div>
             <Reveal>
-              <article className="col-start-1 row-start-1 px-1 sm:px-4">
+              <article className="col-start-1 row-start-1 h-full px-1 sm:px-4">
                 <h2 className="font-display text-3xl font-bold tracking-tight text-brand-red sm:text-5xl">Vision</h2>
                 <div aria-hidden="true" className="mt-3 w-20 space-y-1 sm:mt-4 sm:w-32">
                   <span className="block h-[2px] rounded-full bg-brand-red" />
@@ -62,7 +62,7 @@ export default function Story() {
               </article>
             </Reveal>
             <Reveal delay={0.1}>
-              <article className="col-start-1 row-start-2 px-1 sm:col-start-2 sm:row-start-2 sm:mt-8 sm:px-4 lg:mt-16">
+              <article className="col-start-1 row-start-2 h-full px-1 sm:col-start-2 sm:row-start-1 sm:px-4">
                 <h2 className="font-display text-3xl font-bold tracking-tight text-brand-orange sm:text-5xl">Mission</h2>
                 <div aria-hidden="true" className="mt-3 w-20 space-y-1 sm:mt-4 sm:w-32">
                   <span className="block h-[2px] rounded-full bg-brand-orange" />

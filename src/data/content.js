@@ -15,18 +15,10 @@ export const NAV = [
   { to: '/menu', label: 'Menu' },
   { to: '/stores', label: 'Stores' },
   { to: '/events', label: 'Events' },
+  { to: '/news', label: 'News' }
 ];
 
 export const MARQUEE = ['From Cambodia to the World', 'Longest Fries', 'Biggest Smiles', 'Made Fresh', 'Fun for Everyone', 'Franchise Opportunities'];
-
-export const WHY_WOW = [
-  { emoji: '🥔', title: 'Unique Product', text: 'Extra-long fries create strong visual differentiation and a memorable first bite.' },
-  { emoji: '😊', title: 'Loved by Families', text: 'Designed around fun, sharing and smiles — for kids, teens and grown-ups alike.' },
-  { emoji: '⚡', title: 'Fast-Service Concept', text: 'Simple product preparation and a compact operating model.' },
-  { emoji: '🏬', title: 'Mall-Friendly Format', text: 'Built for high-traffic retail environments.' },
-  { emoji: '📈', title: 'Scalable Business', text: 'Standardized systems allow replication across locations.' },
-  { emoji: '🌏', title: 'Built for Expansion', text: 'Developed with the ambition to become an international potato brand.' },
-];
 
 // approved:false => shown as a dashed "pending approval" placeholder.
 // Flip to true ONLY after management approves public disclosure.

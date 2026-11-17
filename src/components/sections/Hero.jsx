@@ -38,7 +38,7 @@ export default function Hero() {
         aria-hidden="true"
         className="pointer-events-none relative z-0 mx-4 mt-8 h-72 sm:h-96 lg:absolute lg:inset-y-0 lg:right-0 lg:top-28 lg:mx-0 lg:mt-0 lg:h-auto lg:w-[56%] lg:[-webkit-mask-image:linear-gradient(90deg,transparent_0%,transparent_14%,rgba(0,0,0,0.6)_32%,#000_52%)] lg:[mask-image:linear-gradient(90deg,transparent_0%,transparent_14%,rgba(0,0,0,0.6)_32%,#000_52%)]"
       >
-        <img src="/images/Golden.png" alt="" className="h-full w-full object-contain" />
+        <img src="/images/Longest-fries.png" alt="" className="h-full w-full object-contain" />
       </div>
 
       {/* TEXT: stays in the left half */}
